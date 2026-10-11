@@ -1,6 +1,6 @@
 import inspect
 
-import snake
+import the_snake as snake
 
 
 def test_game_object_exists():
