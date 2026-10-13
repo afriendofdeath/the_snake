@@ -1,6 +1,6 @@
 import pygame
 
-from the_snake import Apple, Snake
+from the_snake import DOWN, LEFT, RIGHT, UP, Apple, Snake
 
 
 def test_snake_initialization():
@@ -43,7 +43,7 @@ def test_snake_reset():
 
     assert snake.length == 1
     assert len(snake.positions) == 1
-    assert snake.direction == pygame.Vector2(1, 0)
+    assert snake.direction in (UP, DOWN, LEFT, RIGHT)
     assert snake.next_direction is None
 
 

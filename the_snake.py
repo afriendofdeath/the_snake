@@ -73,11 +73,10 @@ class Apple(GameObject):
     def __init__(self, occupied_positions=None):
         """Создаёт яблоко вне занятых клеток."""
         super().__init__(body_color=APPLE_COLOR)
-        self.randomize_position(occupied_positions)
+        self.randomize_position(occupied_positions or [])
 
-    def randomize_position(self, occupied_positions=None):
+    def randomize_position(self, occupied_positions):
         """Выбирает случайную свободную позицию."""
-        occupied_positions = occupied_positions or []
         available_positions = [
             (x * GRID_SIZE, y * GRID_SIZE)
             for x in range(GRID_WIDTH)
@@ -126,7 +125,7 @@ class Snake(GameObject):
 
     def draw(self):
         """Отрисовывает змейку и стирает последний сегмент."""
-        if self.last is not None:
+        if self.last:
             self.draw_cell(
                 self.last,
                 BOARD_BACKGROUND_COLOR,
@@ -143,7 +142,7 @@ class Snake(GameObject):
         """Сбрасывает состояние змейки."""
         self.length = 1
         self.positions = [self.position]
-        self.direction = RIGHT
+        self.direction = random.choice((UP, DOWN, LEFT, RIGHT))
         self.next_direction = None
         self.last = None
 
@@ -166,8 +165,6 @@ def handle_keys(game_object):
 def main():
     """Запускает основной игровой цикл."""
     pg.display.set_caption('Змейка')
-    screen.fill(BOARD_BACKGROUND_COLOR)
-
     snake = Snake()
     apple = Apple(snake.positions)
 
